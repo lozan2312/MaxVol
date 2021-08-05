@@ -1,17 +1,20 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import FinalPage from './component/FinalPage/FinalPage.js';
 import './App.css';
 
-function App() {
-  
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
 
-        </p>
-      </header>
-    </div>
-  );
+
+function App() {
+  return (
+      <main>
+        <BrowserRouter>
+            <Switch>
+                <Route path="/" component={FinalPage} exact />
+            </Switch>
+        </BrowserRouter>
+      </main>
+  )
 }
 
 export default App;
