@@ -1,65 +1,64 @@
-import React from 'react';
-import CoinPair from '../parts/Coin/CoinPair'
-import TimeFrame from '../parts/TimeFrame/TimeFrame'
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import HighchartsReact from 'highcharts-react-official';
+import Highcharts from 'highcharts';
 
-class FinalPage extends React.Component {
+class LineChart extends Component {
   constructor(props) {
-    super(props)
-    this.setState((props) => ({
-      price: props.data.price
-    }));
+    super(props);
 
     this.state = {
-      type: '',
-      coin: 'ETHBTC',
-      time: '1day',
-    };
-
-  }
-
-  getPrice = (event) => {
-    let region;
-    let weight;
-    if (event.target.name === 'optradio') {
-      region = event.target.value;
-      weight = this.state.weight;
-      this.setState({ region });
-    } else {
-      region = this.state.region;
-      weight = event.target.value;
-      this.setState({ weight });
-    }
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(
-        {
-          type: this.state.type,
-          region,
-          weight
+      // To avoid unnecessary update keep all options in the state.
+      chartOptions: {
+        xAxis: {
+          categories: ['A', 'B', 'C'],
+        },
+        series: [
+          { data: [1, 2, 3] }
+        ],
+        plotOptions: {
+          series: {
+            point: {
+              events: {
+                mouseOver: this.setHoverData.bind(this)
+              }
+            }
+          }
         }
-      )
+      },
+      hoverData: null
     };
-    fetch('/transaction/LocationPrice', requestOptions)
-      .then(res => res.json())
-      .then(json => { this.setState({ price: json[0].price }) })
-      .catch(err => console.error("Error:", err));
   }
 
-  onCardClick(type) {
-    this.setState({ type });
+  setHoverData = (e) => {
+    // The chart is not updated because `chartOptions` has not changed.
+    this.setState({ hoverData: e.target.category })
   }
 
-  render(){
-    if (this.state.data.length===0)
-        return (<p>ops</p>);
-    return(
+  updateSeries = () => {
+    // The chart is updated only with new options.
+    this.setState({
+      chartOptions: {
+        series: [
+          { data: [Math.random() * 5, 2, 1]}
+        ]
+      }
+    });
+  }
+
+  render() {
+    const { chartOptions, hoverData } = this.state;
+
+    return (
       <div>
-        <CoinPair data={this.state.data.Coins}/>
-        <TimeFrame data={this.state.data.Time}/>
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={chartOptions}
+        />
+      <h3>Hovering over {hoverData}</h3>
+      <button onClick={this.updateSeries.bind(this)}>Update Series</button>
       </div>
-      )
+    )
   }
 }
-
-export default FinalPage
+export default LineChart

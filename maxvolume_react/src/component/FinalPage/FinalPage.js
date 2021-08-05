@@ -22,9 +22,11 @@ class FinalPage extends React.Component {
     return(
       <div id="FinalPage">
         <center><img className="img-fluid" src={logo}/></center>
+        <h1 className="text-center mt-5">Max Volume Indicator</h1>
         <div className="row m-5">
           <CoinPair data={this.state.data.Coins}/>
           <TimeFrame data={this.state.data.Time}/>
+
         </div>
       </div>
       )

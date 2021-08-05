@@ -1,8 +1,27 @@
-/* body{
-  background: url("./pic1.png") no-repeat ;
-  background-size: cover ;
-} */
+body{
+  background-color:#f1bf0a;
+}
 img{
   width:100%;
   height: auto
+}
+
+h1 {
+  font-size: 50px;
+  background: -webkit-linear-gradient(left,#151a1a, #939598);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#FinalPage h1 , label{
+  font-family: 'STIX Two Text', serif;
+  color: #343636;
+}
+
+label{
+  font-size: 25px;
+  font-weight:bold;
+}
+
+option{
+  font-weight:bold;
 }
