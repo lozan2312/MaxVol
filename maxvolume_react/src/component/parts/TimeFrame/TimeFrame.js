@@ -10,24 +10,19 @@ class TimeFrame extends React.Component{
       time: '1day',
     };
   }
-  getTime = (event) => {
-    let time;
-    time = event.target.value;
-    this.setState({ time });
-    console.log(time);
-  }
+
   render(){
     const SelectTime = []
     for (var i=0; i < this.props.data.length; i++) {
-      SelectTime.push(<option value={this.props.data[i]["value"]}>{this.props.data[i]["value"]}</option>)
+      SelectTime.push(<option value={this.props.data[i]["period"]}>{this.props.data[i]["value"]}</option>)
     }
     return(
         <div className="form-group col-4">
             <label>Select Time:</label>
-            <select class="form-control" name="TimeFrame" onChange={this.getTime}>
-            <option value="0" disabled selected>Select:</option>
-            {SelectTime}
-          </select>
+            <select class="form-control" name="time" onChange={this.props.handleChange}>
+              <option value="0" disabled selected>Select:</option>
+              {SelectTime}
+            </select>
         </div>
       )
   }

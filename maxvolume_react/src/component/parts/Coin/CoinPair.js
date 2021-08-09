@@ -10,12 +10,7 @@ class CoinPair extends React.Component{
       coin: 'ETHBTC',
     };
   }
-  getCoin = (event) => {
-    let coin;
-    coin = event.target.value;
-    this.setState({ coin });
-    console.log(coin);
-  }
+
   render(){
     const SelectCoins = []
     for (var i=0; i < this.props.data.length; i++) {
@@ -24,7 +19,7 @@ class CoinPair extends React.Component{
     return(
         <div className="form-group col-4" id="CoinPair">
             <label>Select Coin:</label>
-            <select class="form-control" name="CoinPair" onChange={this.getCoin}>
+            <select class="form-control" name="coin" onChange={this.props.handleChange}>
             <option value="0" disabled selected>Select:</option>
             {SelectCoins}
           </select>
