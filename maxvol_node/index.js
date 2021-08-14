@@ -46,104 +46,37 @@ async function VolFunc(req, res){
     for (let i = 0; i < ticks.length; i++) {
        Volume.push(parseFloat(ticks[i][5]))
     }
-    console.log(Volume
-    );
+    console.log(Volume);
     let AvgPrice=[]
     for (let i = 0; i < ticks.length; i++) {
        let Price=(Number(ticks[i][2])+Number(ticks[i][3]))/2
        AvgPrice.push(Price.toFixed(3))
     }
     console.log(AvgPrice);
-
-// let indx=[];
-// for (let i=0;i<AvgPrice.length;i++){
-//   if (AvgPrice[i]==AvgPrice[i+1]){
-//   indx[i]=i+1
-// }
-// else{
-//   indx[i]=i
-//
-// }
-// }
-let indx=[];
-let count=0;
-for (let i=1;i<AvgPrice.length;i++){
-    if (AvgPrice[i]==AvgPrice[i-1]){
-      count=count+1
+    let myPrice = AvgPrice;
+    let unique = myPrice.filter((v, i, a) => a.indexOf(v) === i);
+    let result=[];
+    let count=0;
+    for (let element in unique){
+        for (let j = 0; j <AvgPrice.length;j++){
+            if (unique[element]==AvgPrice[j]){
+                count=count+Volume[j]
+            }
+            else{
+              continue;
+            }
+      }
+      result.push(count)
+      count=0
     }
-    else{
-      indx.push(count)
-    }
-  }
 
-console.log(indx);
-// NewAvg=[]
-// NewVol=[]
-// for (let i = 0; i < AvgPrice.length; i++) {
-//   for (let j = 1; j < AvgPrice.length; j++){
-//     if (AvgPrice[i]==AvgPrice[j]) {
-//       Volume[i]= Volume[i]+Volume[j]
-//     }
-//     else{
-//       NewVol.push(Volume[j])
-//       NewAvg.push(AvgPrice[j])
-//     }
-//  }
-//   NewVol.push(Volume[i])
-//   NewAvg.push(AvgPrice[i])
-// }
-//
-// console.log(NewVol);
-// console.log(NewAvg);
-    // let indx=[];
-    // i=0;
-    // j=0;
-    // while(i<AvgPrice.length){
-    //   if (AvgPrice[j]==AvgPrice[j+1]){
-    //     i=i+1
-    // }
-    // }
-    // for (price in AvgPrice) {
-    // for (let j = 0 ;j < AvgPrice.length;j++) {
-    //   if (AvgPrice[j]==AvgPrice[j+1]){
-    //     indx.push(j+1)
-    // }
-    //   else{
-    //   PriceCoin.push(AvgPrice[j-1])
-    //   result.push(Volume[j])
-    //   j=j+1
-    // }
-    // }
-    //   }
-    //
-
-
-
-    // let newAvg=[];
-    // let newVol=[];
-    // for (let i = 0; i < AvgPrice.length; i++) {
-    //   for (let j = 1; j < AvgPrice.length; j++) {
-    //     if (AvgPrice[i]==AvgPrice[j]){
-    //       newVol.push(Volume[i]+Volume[j])
-    //       newAvg.push(AvgPrice[i])
-    //     }
-    //     else{
-    //       newVol.push(Volume[j])
-    //       newAvg.push(AvgPrice[j])
-    //     }
-    // }
-    // }
-
-
-
-console.log(11131.689+5045.586);
-    res.send({ volume: Volume, avgPrice: AvgPrice });
-    // console.info("high: "+high,"low: "+low,"volume: "+Volume);
+    res.send({ volume: result, avgPrice: unique });
   }, { limit: time });
 }
 
 app.get('/FinalPage', mongodb.Data);
 app.post('/FinalPage', jsonParser, VolFunc);
+
 
 
 

@@ -12,7 +12,7 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-#FinalPage h1 , label{
+#FinalPage h1 , label, button{
   font-family: 'STIX Two Text', serif;
   color: #343636;
 }
@@ -24,4 +24,13 @@ label{
 
 option{
   font-weight:bold;
+}
+button{
+  border: 2px solid #343636;
+  width: 100px;
+  height: 40px;
+  margin-top: 44px;
+}
+.chart{
+  margin-left: 25%;
 }
